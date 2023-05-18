@@ -6,6 +6,8 @@ const {
 	createAdminUser,
 	logout,
 	updateAllUserIsNew,
+	updateALLUser,
+	getTop5Users,
 } = require('../controllers/userController');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
@@ -26,5 +28,11 @@ router.route('/logout').put(logout);
 
 // update all user is_new to false
 router.route('/updateAllUserIsNew').put(updateAllUserIsNew);
+
+// update all user is_new to false
+router.route('/updateAllUser').put(updateALLUser);
+
+// get top 5 users
+router.route('/top5').get(getTop5Users);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const UsersCard = ({ title = 'Admin Info', users }) => {
-	console.log(users);
+	// console.log(users);
 	return (
 		<div className='p-2 border border-blue-700 rounded-md bg-slate-700'>
 			<h3 className='text-xs italic font-semibold text-center'>{title}</h3>

@@ -11,6 +11,7 @@ const Company = require('../models/companyModel');
 const companyId = process.env.COMPANY_ID;
 const Family = require('../models/familyModel');
 const Table = require('../models/tableModel');
+const Host = require('../models/hostModel');
 
 //======================================
 //seed user => /api/v1/seed/user
@@ -653,5 +654,66 @@ exports.updateAllUserIsNew = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		message: 'All users updated successfully',
+	});
+});
+
+// update all user info
+exports.updateALLUser = catchAsyncErrors(async (req, res, next) => {
+	// get all host
+	const hosts = await Host.find();
+	if (!hosts) {
+		return next(new ErrorHander('Hosts not found', 404));
+	}
+	// get all users with out admin
+	const users = await User.find({ role: 'user' });
+	if (!users) {
+		return next(new ErrorHander('Users not found', 404));
+	}
+
+	// update all users receive_coins by host receive_coins
+	for (let i = 0; i < users.length; i++) {
+		if (!users[i].id) {
+			continue;
+		}
+		const user = await User.findOne({ id: users[i].id });
+		if (!user) {
+			continue;
+		}
+		let totalReceiveCoins = 0;
+		for (let j = 0; j < hosts.length; j++) {
+			if (user.id === hosts[j].family_id) {
+				totalReceiveCoins += hosts[j].receive_coin;
+			}
+		}
+
+		user.receive_coins = totalReceiveCoins;
+		await user.save();
+		console.log(
+			`user ${user.user_id} receive_coins: ${user.receive_coins} totalReceiveCoins: ${totalReceiveCoins}`
+		);
+	}
+	res.status(200).json({
+		success: true,
+		message: 'All users updated successfully',
+	});
+});
+
+// find top 5 users by receive_coins
+exports.getTop5Users = catchAsyncErrors(async (req, res, next) => {
+	const users = await User.find({ role: 'user' })
+		.sort({ receive_coins: -1 })
+		.limit(5);
+	if (!users) {
+		return next(new ErrorHander('Users not found', 404));
+	}
+
+	// for (let i = 0; i < users.length; i++) {
+	// 	let user = users[i];
+	// 	console.log(`user ${user.name} receive_coins: ${user.receive_coins}`);
+	// }
+
+	res.status(200).json({
+		success: true,
+		topUsers: users,
 	});
 });

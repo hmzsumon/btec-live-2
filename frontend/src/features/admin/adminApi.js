@@ -31,6 +31,12 @@ export const adminApi = apiSlice.injectEndpoints({
 			query: (id) => `/family/salary/${id}`,
 			providesTags: ['FamilySalary'],
 		}),
+
+		// get top 5 agent
+		getTopAgentAdmin: builder.query({
+			query: () => '/top5',
+			providesTags: ['TopAgent'],
+		}),
 	}),
 });
 
@@ -40,4 +46,5 @@ export const {
 	useGetSalaryAdminQuery,
 	useGetAgentAdminQuery,
 	useGetFamilySalaryAdminQuery,
+	useGetTopAgentAdminQuery,
 } = adminApi;
