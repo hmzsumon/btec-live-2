@@ -49,7 +49,7 @@ const Login = () => {
 			if (user.role === 'admin' || user?.role === 'manager') {
 				navigate('/admin-dashboard');
 			} else {
-				navigate('/my-teams');
+				navigate('/my-teams', { state: { id: user?.id } });
 			}
 		}
 	}, [isError, isSuccess, error, navigate, user, user_id]);
@@ -120,7 +120,7 @@ const Login = () => {
 											'Login'
 										)}
 									</button>
-									<div className='space-y-3 '>
+									{/* <div className='space-y-3 '>
 										<p className='text-xs italic text-center md:text-sm'>
 											No account yet in Lottowin24?{' '}
 											<Link to='/register' className='text-orange-500'>
@@ -133,7 +133,7 @@ const Login = () => {
 												Forgot Password?
 											</Link>
 										</p>
-									</div>
+									</div> */}
 								</div>
 							</form>
 						</div>

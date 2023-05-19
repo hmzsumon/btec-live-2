@@ -379,6 +379,8 @@ exports.getFamilySalaryInfo = catchAsyncErrors(async (req, res, next) => {
 		return acc + Number(user.grosSalary);
 	}, 0);
 
+	// get total pay
+
 	res.status(200).json({
 		success: true,
 		users,

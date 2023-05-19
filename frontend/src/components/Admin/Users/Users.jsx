@@ -34,6 +34,13 @@ const Users = () => {
 			field: 'name',
 			headerName: 'Name',
 			width: 160,
+			renderCell: (params) => {
+				return (
+					<div className='flex items-center'>
+						{decodeURIComponent(params.row.name)}
+					</div>
+				);
+			},
 		},
 
 		{

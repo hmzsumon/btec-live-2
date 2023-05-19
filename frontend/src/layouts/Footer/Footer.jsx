@@ -8,7 +8,7 @@ const Footer = () => {
 		<footer className='py-3 space-y-10 text-gray-500 '>
 			<div className='flex flex-col items-center space-y-2 '>
 				<NavLink to='/' className='flex items-center mx-auto '>
-					<img src={logo} alt='logo' className=' w-28' />
+					<img src='./images/logo.png' alt='logo' className='w-16 ' />
 				</NavLink>
 				<div className='md:w-2/5 '>
 					<p className='text-sm italic text-center '>
@@ -20,7 +20,7 @@ const Footer = () => {
 
 			<div className='flex items-center justify-center pt-4 border-t border-slate-700 '>
 				<p className='text-sm italic text-center '>
-					Copyright © 2022-2023 All Rights Reserved By Lottowin24
+					Copyright © 2022-2023 All Rights Reserved By BTEC LIVE
 				</p>
 			</div>
 		</footer>

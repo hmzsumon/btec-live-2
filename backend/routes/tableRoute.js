@@ -7,6 +7,8 @@ const {
 	getSalary,
 	getUsersByFamilyId,
 	createNewHost,
+	top10HostByReceiveCoin,
+	convertAllHostNickNameToText,
 } = require('../controllers/tableController');
 
 router.route('/tables').get(getTables);
@@ -21,5 +23,11 @@ router.route('/family/users').get(getUsersByFamilyId);
 
 // create new host
 router.route('/host').post(createNewHost);
+
+// get top 10 host by receive coin
+router.route('/top10').get(top10HostByReceiveCoin);
+
+// convert all host nickname to text
+router.route('/convert').put(convertAllHostNickNameToText);
 
 module.exports = router;

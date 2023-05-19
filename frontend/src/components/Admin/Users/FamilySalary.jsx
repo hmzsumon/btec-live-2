@@ -47,6 +47,13 @@ const FamilySalary = () => {
 			field: 'name',
 			headerName: 'Name',
 			width: 160,
+			renderCell: (params) => {
+				return (
+					<div className='flex items-center'>
+						{decodeURIComponent(params.row.name)}
+					</div>
+				);
+			},
 		},
 
 		{
@@ -60,26 +67,83 @@ const FamilySalary = () => {
 			field: 'coin',
 			headerName: 'Received Coin',
 			width: 150,
+			renderCell: (params) => {
+				return (
+					<div className='text-[0.9rem]'>
+						<p className='text-yellow-400'>
+							{Number(params.row.coin).toLocaleString('en-US')}
+						</p>
+					</div>
+				);
+			},
 		},
 		{
 			field: 'base_pay',
 			headerName: 'Base Pay',
 			width: 150,
+			renderCell: (params) => {
+				return (
+					<div className='text-[0.8rem]'>
+						<p className='text-purple-600'>
+							{Number(params.row.base_pay).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'bdt',
+							})}
+						</p>
+					</div>
+				);
+			},
 		},
 		{
 			field: 'day_bonus',
 			headerName: 'Day Bonus',
 			width: 150,
+			renderCell: (params) => {
+				return (
+					<div className='text-[0.8rem]'>
+						<p className='text-blue-500'>
+							{Number(params.row.day_bonus).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'bdt',
+							})}
+						</p>
+					</div>
+				);
+			},
 		},
 		{
 			field: 'extra_bonus',
 			headerName: 'Extra Bonus',
 			width: 150,
+			renderCell: (params) => {
+				return (
+					<div className='text-[0.8rem]'>
+						<p className='text-orange-500'>
+							{Number(params.row.extra_bonus).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'bdt',
+							})}
+						</p>
+					</div>
+				);
+			},
 		},
 		{
 			field: 'grosSalary',
 			headerName: 'Host Salary',
 			width: 150,
+			renderCell: (params) => {
+				return (
+					<div className='text-[0.8rem]'>
+						<p className='text-green-500'>
+							{Number(params.row.grosSalary).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'bdt',
+							})}
+						</p>
+					</div>
+				);
+			},
 		},
 		{
 			field: 'merchant_pay',
@@ -87,19 +151,32 @@ const FamilySalary = () => {
 			width: 150,
 			renderCell: (params) => {
 				return (
-					<div className='text-[0.6rem]'>
-						<p className='text-green-500'>
-							<span className='text-green-500'>Base: </span>
-							{params.row.merchant_pay}
+					<div className='text-[0.8rem]'>
+						<p className='text-orange-300'>
+							{Number(
+								Number(params.row.merchant_pay) +
+									Number(params.row.merchant_extra)
+							).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'bdt',
+							})}
 						</p>
-
-						<p className='text-blue-500'>
-							<span className='text-blue-500'>Extra: </span>
-							{params.row.merchant_extra}
-						</p>
-						<p className='text-orange-500'>
-							<span className='text-orange-500'>Total: </span>
-							{params.row.merchant_total}
+					</div>
+				);
+			},
+		},
+		{
+			field: 'total_pay',
+			headerName: 'Total Pay',
+			width: 150,
+			renderCell: (params) => {
+				return (
+					<div className='text-[0.8rem]'>
+						<p className='text-yellow-500 '>
+							{Number(params.row.total_pay).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'bdt',
+							})}
 						</p>
 					</div>
 				);
@@ -162,6 +239,10 @@ const FamilySalary = () => {
 				extra_bonus: user.extra_bonus,
 				merchant_extra: user.merchant_extra,
 				merchant_total: user.merchant_total,
+				total_pay:
+					Number(user.grosSalary) +
+					Number(user.merchant_pay) +
+					Number(user.merchant_extra),
 			});
 		});
 	return (
@@ -172,32 +253,56 @@ const FamilySalary = () => {
 				</div>
 			) : (
 				<div className='p-4'>
-					<div className=' space-y-2 my-3'>
-						<p>
+					<div className='my-3 space-y-2 '>
+						<p className='space-x-2 '>
 							<span className='text-green-500'>Family Name: </span>
 							<span>{singleFamily && singleFamily.name}</span>
 						</p>
-						<p>
+						<p className='space-x-2 '>
 							<span className='text-green-500'>Family ID: </span>
 							<span>{singleFamily && singleFamily.user_id}</span>
 						</p>
-						<p>
+						<p className='space-x-2 '>
 							<span className='text-green-500'>Family Total Coin: </span>
-							<span>{totalCoins && totalCoins}</span>
+							<span>
+								{Number(totalCoins && totalCoins).toLocaleString('en-US')}
+							</span>
 						</p>
-						<p>
+						<p className='space-x-2 '>
 							<span className='text-green-500'>Total Host Salary: </span>
-							<span>{totalGrossSalary && totalGrossSalary}</span>
+							<span>
+								{Number(totalGrossSalary).toLocaleString('en-US', {
+									style: 'currency',
+									currency: 'bdt',
+								})}
+							</span>
 						</p>
-						<p>
+						<p className='space-x-2 '>
 							<span className='text-green-500'>Agent Salary: </span>
-							<span>{totalMerchantPay && totalMerchantPay}</span>
+							<span>
+								{Number(totalMerchantPay && totalMerchantPay).toLocaleString(
+									'en-US',
+									{ style: 'currency', currency: 'bdt' }
+								)}
+							</span>
 						</p>
-						<p>
+						<p className='space-x-2 '>
+							<span className='text-green-500'>Total Salary: </span>
+							<span>
+								{totalGrossSalary &&
+									Number(
+										Number(totalGrossSalary) + Number(totalMerchantPay)
+									).toLocaleString('en-US', {
+										style: 'currency',
+										currency: 'bdt',
+									})}
+							</span>
+						</p>
+						<p className='space-x-2 '>
 							<span className='text-green-500'>Total Host: </span>
 							<span>{totalHost && totalHost}</span>
 						</p>
-						<p>
+						<p className='space-x-2 '>
 							<span className='text-green-500'>Total Success Host: </span>
 							<span>{users && users.length}</span>
 						</p>

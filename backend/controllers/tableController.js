@@ -405,3 +405,36 @@ exports.createNewHost = catchAsyncErrors(async (req, res, next) => {
 		users,
 	});
 });
+
+// top 10 host by receive coin
+exports.top10HostByReceiveCoin = catchAsyncErrors(async (req, res, next) => {
+	const hosts = await Host.find().sort({ receive_coin: -1 }).limit(10);
+
+	res.status(200).json({
+		success: true,
+		top10Host: hosts,
+	});
+});
+
+// convert all host nick_name to text
+exports.convertAllHostNickNameToText = catchAsyncErrors(
+	async (req, res, next) => {
+		const hosts = await Host.find();
+		console.log(hosts.length);
+		for (let i = 0; i < hosts.length; i++) {
+			const host = hosts[i];
+			const nickName = host.nick_name.replace(/\[/g, '').replace(/\]/g, '');
+			const emoji = nickName.replace(/EMOJI:/g, '');
+			const emojiText = emoji.replace(/:/g, '');
+			// find host by _id
+			const hostById = await Host.findById(host._id);
+			hostById.nick_name = emojiText;
+			await hostById.save();
+		}
+
+		res.status(200).json({
+			success: true,
+			users,
+		});
+	}
+);

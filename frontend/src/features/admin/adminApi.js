@@ -37,6 +37,12 @@ export const adminApi = apiSlice.injectEndpoints({
 			query: () => '/top5',
 			providesTags: ['TopAgent'],
 		}),
+
+		// get top 10 host
+		getTopHostAdmin: builder.query({
+			query: () => '/top10',
+			providesTags: ['TopHost'],
+		}),
 	}),
 });
 
@@ -47,4 +53,5 @@ export const {
 	useGetAgentAdminQuery,
 	useGetFamilySalaryAdminQuery,
 	useGetTopAgentAdminQuery,
+	useGetTopHostAdminQuery,
 } = adminApi;
