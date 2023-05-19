@@ -60,9 +60,38 @@ const userSchema = new mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		salary: {
+			type: Number,
+			default: 0,
+		},
+		base_pay: {
+			type: Number,
+			default: 0,
+		},
+		host_salary: {
+			type: Number,
+			default: 0,
+		},
+		extra_bonus: {
+			type: Number,
+			default: 0,
+		},
 		receive_coins: {
 			type: Number,
 			default: 0,
+		},
+		target_coins: {
+			type: Number,
+			default: 0,
+		},
+		extra_coins: {
+			type: Number,
+			default: 0,
+		},
+
+		is_success: {
+			type: Boolean,
+			default: false,
 		},
 
 		resetPasswordToken: String,
