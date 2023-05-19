@@ -1,19 +1,17 @@
 import React from 'react';
 import DashboardLayout from '../layouts/DashboardLayout';
 import FadeLoader from 'react-spinners/FadeLoader';
+import ExcelJS from 'exceljs';
 
 import { formatDate } from '../../../utils/functions';
 import { DataGrid } from '@mui/x-data-grid';
 
-import Actions from './Actions';
+// import Actions from './Actions';
 import { useParams } from 'react-router-dom';
 
-import {
-	useGetAgentAdminQuery,
-	useGetFamilySalaryAdminQuery,
-} from '../../../features/admin/adminApi';
-import { Link } from 'react-router-dom';
-import { FiEye } from 'react-icons/fi';
+import { useGetFamilySalaryAdminQuery } from '../../../features/admin/adminApi';
+// import { Link } from 'react-router-dom';
+// import { FiEye } from 'react-icons/fi';
 
 const FamilySalary = () => {
 	const { id } = useParams();
@@ -27,15 +25,16 @@ const FamilySalary = () => {
 		totalGrossSalary,
 		totalHost,
 	} = data || [];
-	// handle delete user
-	const handleDelete = () => {
-		console.log('delete');
-	};
 
-	// handle cancel withdraw
-	const cancelWithdraw = () => {
-		console.log('cancel');
-	};
+	// // handle delete user
+	// const handleDelete = () => {
+	// 	console.log('delete');
+	// };
+
+	// // handle cancel withdraw
+	// const cancelWithdraw = () => {
+	// 	console.log('cancel');
+	// };
 
 	const columns = [
 		// {
@@ -307,6 +306,7 @@ const FamilySalary = () => {
 							<span>{users && users.length}</span>
 						</p>
 					</div>
+
 					<div className='w-full shadow-lg rounded-xl' style={{ height: 470 }}>
 						<DataGrid
 							rows={rows}

@@ -1,5 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
+import ExcelJS from 'exceljs';
 
 import { FadeLoader } from 'react-spinners';
 import { formatDate } from '../../../utils/functions';
@@ -24,6 +25,75 @@ const MyTeams = () => {
 		totalHost,
 	} = data || [];
 
+	//handle excel export
+	const handleExcelExport = () => {
+		const workbook = new ExcelJS.Workbook();
+		const sheet = workbook.addWorksheet('Family Salary');
+		sheet.properties.defaultRowHeight = 30;
+		// style header
+		const headerRow = sheet.getRow(1);
+		headerRow.font = { size: 12, bold: true };
+		headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
+		headerRow.height = 30;
+		headerRow.eachCell((cell) => {
+			cell.fill = {
+				type: 'pattern',
+				pattern: 'solid',
+				fgColor: { argb: 'FFA500' },
+			};
+		});
+		headerRow.border = {
+			top: { style: 'thin' },
+			left: { style: 'thin' },
+			bottom: { style: 'thin' },
+			right: { style: 'thin' },
+		};
+		headerRow.fill = {
+			type: 'pattern',
+			pattern: 'solid',
+			fgColor: { argb: 'FFA500' },
+		};
+
+		sheet.columns = [
+			{ header: 'Name', key: 'name', width: 30 },
+			{ header: 'Bteclive ID', key: 'id', width: 20 },
+			{ header: 'Received Coin', key: 'coin', width: 20 },
+			{ header: 'Base Pay', key: 'base_pay', width: 20 },
+			{ header: 'Day Bonus', key: 'day_bonus', width: 20 },
+			{ header: 'Extra Bonus', key: 'extra_bonus', width: 20 },
+			{ header: 'Salary', key: 'salary', width: 20 },
+		];
+
+		const rows = users?.map((user) => {
+			console.log(user);
+			return {
+				name: decodeURIComponent(user.nickname),
+				id: user.id,
+				coin: user.coin,
+				base_pay: user.base_pay,
+				day_bonus: user.day_bonus,
+				extra_bonus: user.extra_bonus,
+				salary: user.grosSalary,
+			};
+		});
+
+		sheet.addRows(rows);
+
+		workbook.xlsx.writeBuffer().then((data) => {
+			const blob = new Blob([data], {
+				type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			});
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.setAttribute('hidden', '');
+			a.setAttribute('href', url);
+			a.setAttribute('download', 'host-salary.xlsx');
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+		});
+	};
+	//application / vnd.ms - excel;
 	if (users?.length === 0) {
 		return (
 			<Layout>
@@ -180,59 +250,69 @@ const MyTeams = () => {
 				</div>
 			) : (
 				<div className='px-2 md:px-20'>
-					<div className='my-3 space-y-2 '>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Family Name: </span>
-							<span>{singleFamily && singleFamily.name}</span>
-						</p>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Family ID: </span>
-							<span>{singleFamily && singleFamily.user_id}</span>
-						</p>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Family Total Coin: </span>
-							<span>
-								{Number(totalCoins && totalCoins).toLocaleString('en-US')}
-							</span>
-						</p>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Total Host Salary: </span>
-							<span>
-								{Number(totalGrossSalary).toLocaleString('en-US', {
-									style: 'currency',
-									currency: 'bdt',
-								})}
-							</span>
-						</p>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Agent Salary: </span>
-							<span>
-								{Number(totalMerchantPay && totalMerchantPay).toLocaleString(
-									'en-US',
-									{ style: 'currency', currency: 'bdt' }
-								)}
-							</span>
-						</p>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Total Salary: </span>
-							<span>
-								{totalGrossSalary &&
-									Number(
-										Number(totalGrossSalary) + Number(totalMerchantPay)
-									).toLocaleString('en-US', {
+					<div className='flex items-center justify-between '>
+						<div className='my-3 space-y-2 '>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Family Name: </span>
+								<span>{singleFamily && singleFamily.name}</span>
+							</p>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Family ID: </span>
+								<span>{singleFamily && singleFamily.user_id}</span>
+							</p>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Family Total Coin: </span>
+								<span>
+									{Number(totalCoins && totalCoins).toLocaleString('en-US')}
+								</span>
+							</p>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Total Host Salary: </span>
+								<span>
+									{Number(totalGrossSalary).toLocaleString('en-US', {
 										style: 'currency',
 										currency: 'bdt',
 									})}
-							</span>
-						</p>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Total Host: </span>
-							<span>{totalHost && totalHost}</span>
-						</p>
-						<p className='space-x-2 '>
-							<span className='text-green-500'>Total Success Host: </span>
-							<span>{users && users.length}</span>
-						</p>
+								</span>
+							</p>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Agent Salary: </span>
+								<span>
+									{Number(totalMerchantPay && totalMerchantPay).toLocaleString(
+										'en-US',
+										{ style: 'currency', currency: 'bdt' }
+									)}
+								</span>
+							</p>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Total Salary: </span>
+								<span>
+									{totalGrossSalary &&
+										Number(
+											Number(totalGrossSalary) + Number(totalMerchantPay)
+										).toLocaleString('en-US', {
+											style: 'currency',
+											currency: 'bdt',
+										})}
+								</span>
+							</p>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Total Host: </span>
+								<span>{totalHost && totalHost}</span>
+							</p>
+							<p className='space-x-2 '>
+								<span className='text-green-500'>Total Success Host: </span>
+								<span>{users && users.length}</span>
+							</p>
+						</div>
+						<div className=''>
+							<button
+								className='px-4 py-1 bg-orange-500 rounded'
+								onClick={handleExcelExport}
+							>
+								Export to Excel
+							</button>
+						</div>
 					</div>
 					<div
 						className='w-full shadow-lg bg-slate-800 rounded-xl'
