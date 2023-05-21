@@ -52,6 +52,9 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 	let users = [];
 	for (let i = 0; i < hosts.length; i++) {
 		const user = hosts[i];
+		// if (user.id === '217981') {
+		// 	console.log(user.receive_coin);
+		// }
 
 		const numTicket = Number(user.ticket);
 		let netAmount = 0;
@@ -66,6 +69,9 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 		let merchant_total = 0;
 
 		if (numTicket >= 50000 && numTicket <= 249999) {
+			// if (user.id === '217981') {
+			// 	console.log('217981');
+			// }
 			netAmount = numTicket * 0.5;
 			salary_amount = netAmount * 0.02;
 			base_pay = salary_amount;
@@ -92,9 +98,10 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket >= 6500000 && numTicket < 949999) {
-			netAmount = 6500000 - 6500000 * 0.16;
-			extra = numTicket - 6500000;
+		} else if (numTicket >= 650000 && numTicket <= 949999) {
+			console.log('900000');
+			netAmount = 650000 - 650000 * 0.16;
+			extra = numTicket - 650000;
 			salary_amount = netAmount * 0.02;
 			base_pay = salary_amount * 0.405;
 			day_bonus = salary_amount * 0.49;

@@ -125,6 +125,7 @@ exports.getFamilySalaryInfo = catchAsyncErrors(async (req, res, next) => {
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
 		} else if (numTicket >= 650000 && numTicket <= 949999) {
+			console.log('900000');
 			netAmount = 650000 - 650000 * 0.16;
 			extra = numTicket - 650000;
 			salary_amount = netAmount * 0.02;
