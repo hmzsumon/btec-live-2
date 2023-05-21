@@ -723,3 +723,24 @@ exports.getTop5Users = catchAsyncErrors(async (req, res, next) => {
 		topUsers: users,
 	});
 });
+
+// rest password by admin
+exports.resetPasswordAdmin = catchAsyncErrors(async (req, res, next) => {
+	const { password, user_id } = req.body;
+
+	const user = await User.findOne({ user_id }).select('+password');
+	if (!user) {
+		return next(new ErrorHander('User not found', 404));
+	}
+
+	console.log(password, user_id);
+
+	// update password
+	user.password = password;
+	await user.save();
+
+	res.status(200).json({
+		success: true,
+		message: 'Password updated successfully',
+	});
+});

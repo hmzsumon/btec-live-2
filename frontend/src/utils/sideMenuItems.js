@@ -1,5 +1,5 @@
 import { FiUsers } from 'react-icons/fi';
-import { MdOutlineDashboard } from 'react-icons/md';
+import { MdOutlineDashboard, MdPassword } from 'react-icons/md';
 
 const sideMenuItems = [
 	{
@@ -39,13 +39,13 @@ const sideMenuItems = [
 		role: 'admin',
 	},
 
-	// {
-	// 	id: 13,
-	// 	name: 'Verifications',
-	// 	icon: <MdOutlineVerifiedUser />,
-	// 	path: '/admin/verifications',
-	// 	role: 'all',
-	// },
+	{
+		id: 13,
+		name: 'Update Password',
+		icon: <MdPassword />,
+		path: '/admin/update-password',
+		role: 'all',
+	},
 	// {
 	// 	id: 6,
 	// 	name: 'Shares',

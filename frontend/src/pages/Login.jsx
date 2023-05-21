@@ -16,7 +16,7 @@ const Login = () => {
 		useLoginMutation();
 	const { user } = data || {};
 
-	const { isAuthenticated, user: s_user } = useSelector((state) => state.auth);
+	const { user: s_user } = useSelector((state) => state.auth);
 
 	const [user_id, setUser_id] = useState('');
 	const [password, setPassword] = useState('');
@@ -33,16 +33,14 @@ const Login = () => {
 		login({ user_id, password });
 	};
 
-	const redirect = location.search
-		? location.search.split('=')[1]
-		: s_user?.role === 'admin' || s_user?.role === 'manager'
-		? 'admin-dashboard'
-		: 'my-teams';
-
 	useEffect(() => {
 		// if (isAuthenticated) {
 		// 	navigate(`/${redirect}`);
 		// }
+
+		if (isError) {
+			toast.error(error.data.message);
+		}
 
 		if (isSuccess) {
 			toast.success('Login successful');

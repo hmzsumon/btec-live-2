@@ -43,6 +43,15 @@ export const adminApi = apiSlice.injectEndpoints({
 			query: () => '/top10',
 			providesTags: ['TopHost'],
 		}),
+
+		// reset password admin
+		resetPasswordAdmin: builder.mutation({
+			query: (data) => ({
+				url: '/reset-password',
+				method: 'PUT',
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -54,4 +63,5 @@ export const {
 	useGetFamilySalaryAdminQuery,
 	useGetTopAgentAdminQuery,
 	useGetTopHostAdminQuery,
+	useResetPasswordAdminMutation,
 } = adminApi;

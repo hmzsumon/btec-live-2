@@ -8,6 +8,7 @@ const {
 	updateAllUserIsNew,
 	updateALLUser,
 	getTop5Users,
+	resetPasswordAdmin,
 } = require('../controllers/userController');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
@@ -34,5 +35,15 @@ router.route('/updateAllUser').put(updateALLUser);
 
 // get top 5 users
 router.route('/top5').get(getTop5Users);
+
+// reset password admin
+router
+	.route('/reset-password')
+	.put(
+		upload.none(),
+		isAuthenticatedUser,
+		authorizeRoles('admin'),
+		resetPasswordAdmin
+	);
 
 module.exports = router;

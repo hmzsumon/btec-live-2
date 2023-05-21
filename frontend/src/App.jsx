@@ -49,6 +49,7 @@ const App = () => {
 					<Route path='/admin/users' element={<Users />} />
 					<Route path='/admin/agents' element={<Agents />} />
 					<Route path='/family/:id' element={<FamilySalary />} />
+					<Route path='/admin/update-password' element={<PasswordReset />} />
 				</Route>
 				{/* User Route */}
 				<Route element={<PrivetRoute />}>
