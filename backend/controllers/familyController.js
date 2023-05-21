@@ -69,7 +69,9 @@ exports.getFamilySalaryInfo = catchAsyncErrors(async (req, res, next) => {
 	}
 
 	// get all host
-	const hosts = await Host.find({ family_id: familyId });
+	const hosts = await Host.find({ family_id: familyId }).sort({
+		receive_coin: -1,
+	});
 	if (!hosts) {
 		return next(new ErrorHander('Host not found with this ID', 404));
 	}
@@ -132,7 +134,7 @@ exports.getFamilySalaryInfo = catchAsyncErrors(async (req, res, next) => {
 			merchant_pay = salary_amount * 0.105;
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
-			grosSalary = base_pay + day_bonus;
+			grosSalary = base_pay + day_bonus + extra_bonus;
 		} else if (numTicket >= 950000 && numTicket <= 1249999) {
 			netAmount = 950000 - 950000 * 0.16;
 			extra = numTicket - 950000;

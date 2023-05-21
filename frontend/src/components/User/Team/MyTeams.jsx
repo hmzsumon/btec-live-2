@@ -65,7 +65,7 @@ const MyTeams = () => {
 		];
 
 		const rows = users?.map((user) => {
-			console.log(user);
+			// console.log(user);
 			return {
 				name: decodeURIComponent(user.nickname),
 				id: user.id,
@@ -216,13 +216,30 @@ const MyTeams = () => {
 				);
 			},
 		},
+		{
+			field: 'merchant_total',
+			headerName: 'Family Salary',
+			width: 150,
+			renderCell: (params) => {
+				return (
+					<div className='text-[0.8rem]'>
+						<p className='text-pink-600'>
+							{Number(params.row.merchant_total).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'bdt',
+							})}
+						</p>
+					</div>
+				);
+			},
+		},
 	];
 
 	const rows = [];
 
 	users &&
 		users.map((user) => {
-			return rows.unshift({
+			return rows.push({
 				id: user.id,
 				name: user.nickname,
 				coin: user.coin,
@@ -250,7 +267,7 @@ const MyTeams = () => {
 				</div>
 			) : (
 				<div className='px-2 md:px-20'>
-					<div className='flex items-center justify-between '>
+					<div className=''>
 						<div className='my-3 space-y-2 '>
 							<p className='space-x-2 '>
 								<span className='text-green-500'>Family Name: </span>
@@ -305,7 +322,7 @@ const MyTeams = () => {
 								<span>{users && users.length}</span>
 							</p>
 						</div>
-						<div className=''>
+						<div className='my-2 text-right'>
 							<button
 								className='px-4 py-1 bg-orange-500 rounded'
 								onClick={handleExcelExport}

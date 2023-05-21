@@ -29,6 +29,12 @@ const hostSchema = new Schema(
 		family_id: {
 			type: String,
 		},
+		family_btec_id: {
+			type: String,
+		},
+		family_name: {
+			type: String,
+		},
 		avatar_url: {
 			type: String,
 		},

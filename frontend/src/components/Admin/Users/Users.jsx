@@ -51,6 +51,27 @@ const Users = () => {
 			width: 160,
 		},
 		{
+			field: 'family_name',
+			headerName: 'Family Name',
+			description: 'This column has a value getter and is not sortable.',
+			sortable: false,
+			width: 160,
+			renderCell: (params) => {
+				return (
+					<div className='flex items-center'>
+						{decodeURIComponent(params.row.family_name)}
+					</div>
+				);
+			},
+		},
+		{
+			field: 'family_id',
+			headerName: 'Family ID',
+			description: 'This column has a value getter and is not sortable.',
+			sortable: false,
+			width: 160,
+		},
+		{
 			field: 'coin',
 			headerName: 'Received Coin',
 			width: 150,
@@ -143,9 +164,11 @@ const Users = () => {
 
 	users &&
 		users.map((user) => {
-			return rows.unshift({
+			return rows.push({
 				id: user.id,
 				name: user.nickname,
+				family_name: user.family_name,
+				family_id: user.family_id,
 				coin: user.coin,
 				salary_amount: user.salary_amount,
 				base_pay: user.base_pay,

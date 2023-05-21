@@ -2,6 +2,7 @@ const ErrorHander = require('../utils/errorhander');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const Table = require('../models/tableModel');
 const Host = require('../models/hostModel');
+const User = require('../models/userModel');
 const { loadUser } = require('../utils/userModel');
 
 // find all tables
@@ -43,7 +44,7 @@ exports.getTable = catchAsyncErrors(async (req, res, next) => {
 // get users salary info
 exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 	// get all host
-	const hosts = await Host.find();
+	const hosts = await Host.find().sort({ receive_coin: -1 });
 	if (!hosts) {
 		return next(new ErrorHander('Host not found with this ID', 404));
 	}
@@ -51,6 +52,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 	let users = [];
 	for (let i = 0; i < hosts.length; i++) {
 		const user = hosts[i];
+
 		const numTicket = Number(user.ticket);
 		let netAmount = 0;
 		let base_pay = 0;
@@ -100,7 +102,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_pay = salary_amount * 0.105;
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
-			grosSalary = base_pay + day_bonus;
+			grosSalary = base_pay + day_bonus + extra_bonus;
 		} else if (numTicket >= 950000 && numTicket < 1249999) {
 			netAmount = 950000 - 950000 * 0.16;
 			extra = numTicket - 950000;
@@ -258,7 +260,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket >= 25000000 && numTicket < 34999999) {
+		} else if (numTicket >= 25000000 && numTicket <= 34999999) {
 			netAmount = 25000000 - 25000000 * 0.12;
 			extra = numTicket - 25000000;
 			salary_amount = netAmount * 0.02;
@@ -325,6 +327,8 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 		users.push({
 			id: user.id,
 			nickname: user.nick_name,
+			family_name: user.family_name,
+			family_id: user.family_btec_id,
 			coin: Number(user.ticket),
 			salary_amount: Number(salary_amount).toFixed(0),
 			base_pay: Number(base_pay).toFixed(0),
@@ -455,5 +459,27 @@ exports.removeDuplicateHostById = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		massage: 'Remove duplicate host by id',
+	});
+});
+
+// update all host family_id
+exports.updateAllHostFamilyId = catchAsyncErrors(async (req, res, next) => {
+	const hosts = await Host.find();
+
+	for (let i = 0; i < hosts.length; i++) {
+		const host = hosts[i];
+		// find family by id
+		const family = await User.findOne({ id: host.family_id });
+		if (family) {
+			const hostById = await Host.findById(host._id);
+			hostById.family_btec_id = family.user_id;
+			hostById.family_name = family.name;
+			await hostById.save();
+		}
+	}
+
+	res.status(200).json({
+		success: true,
+		massage: 'Update all host family_id',
 	});
 });
