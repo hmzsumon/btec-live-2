@@ -25,6 +25,12 @@ exports.seedUser = catchAsyncErrors(async (req, res, next) => {
 	const familyData = families[2].data;
 	for (let i = 0; i < familyData.length; i++) {
 		const f_user = familyData[i];
+		// check user exists
+		const ex_user = await User.findOne({ user_id: f_user.user_id });
+		if (ex_user) {
+			console.log('user exists');
+			continue;
+		}
 		const user = await User.create({
 			name: f_user.name,
 			user_id: f_user.user_id,

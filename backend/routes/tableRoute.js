@@ -9,6 +9,7 @@ const {
 	createNewHost,
 	top10HostByReceiveCoin,
 	convertAllHostNickNameToText,
+	removeDuplicateHostById,
 } = require('../controllers/tableController');
 
 router.route('/tables').get(getTables);
@@ -29,5 +30,8 @@ router.route('/top10').get(top10HostByReceiveCoin);
 
 // convert all host nickname to text
 router.route('/convert').put(convertAllHostNickNameToText);
+
+// remove duplicate host by id
+router.route('/remove').delete(removeDuplicateHostById);
 
 module.exports = router;

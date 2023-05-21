@@ -63,12 +63,12 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 		let merchant_extra = 0;
 		let merchant_total = 0;
 
-		if (numTicket >= 50000 && numTicket < 249999) {
+		if (numTicket >= 50000 && numTicket <= 249999) {
 			netAmount = numTicket * 0.5;
 			salary_amount = netAmount * 0.02;
 			base_pay = salary_amount;
 			grosSalary = base_pay;
-		} else if (numTicket >= 250000 && numTicket < 449999) {
+		} else if (numTicket >= 250000 && numTicket <= 449999) {
 			netAmount = 250000 - 250000 * 0.16;
 			extra = numTicket - 250000;
 			salary_amount = netAmount * 0.02;
@@ -79,7 +79,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_pay = salary_amount * 0.105;
 			merchant_total = merchant_pay + merchant_extra;
-		} else if (numTicket > 450000 && numTicket < 649999) {
+		} else if (numTicket >= 450000 && numTicket <= 649999) {
 			netAmount = 450000 - 450000 * 0.16;
 			extra = numTicket - 450000;
 			salary_amount = netAmount * 0.02;
@@ -90,7 +90,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 6500000 && numTicket < 949999) {
+		} else if (numTicket >= 6500000 && numTicket < 949999) {
 			netAmount = 6500000 - 6500000 * 0.16;
 			extra = numTicket - 6500000;
 			salary_amount = netAmount * 0.02;
@@ -101,7 +101,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus;
-		} else if (numTicket > 950000 && numTicket < 1249999) {
+		} else if (numTicket >= 950000 && numTicket < 1249999) {
 			netAmount = 950000 - 950000 * 0.16;
 			extra = numTicket - 950000;
 			salary_amount = netAmount * 0.02;
@@ -112,7 +112,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 1250000 && numTicket < 1749999) {
+		} else if (numTicket >= 1250000 && numTicket < 1749999) {
 			netAmount = 1250000 - 1250000 * 0.15;
 			extra = numTicket - 1250000;
 			salary_amount = netAmount * 0.02;
@@ -123,7 +123,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 1750000 && numTicket < 2249999) {
+		} else if (numTicket >= 1750000 && numTicket < 2249999) {
 			netAmount = 1750000 - 1750000 * 0.15;
 			extra = numTicket - 1750000;
 			salary_amount = netAmount * 0.02;
@@ -134,7 +134,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 2250000 && numTicket < 2849999) {
+		} else if (numTicket >= 2250000 && numTicket < 2849999) {
 			netAmount = 2250000 - 2250000 * 0.15;
 			extra = numTicket - 2250000;
 			salary_amount = netAmount * 0.02;
@@ -145,7 +145,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 2850000 && numTicket < 3499999) {
+		} else if (numTicket >= 2850000 && numTicket < 3499999) {
 			netAmount = 2850000 - 2850000 * 0.15;
 			extra = numTicket - 2850000;
 			salary_amount = netAmount * 0.02;
@@ -157,7 +157,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 3500000 && numTicket < 4499999) {
+		} else if (numTicket >= 3500000 && numTicket < 4499999) {
 			netAmount = 3500000 - 3500000 * 0.14;
 			extra = numTicket - 3500000;
 			salary_amount = netAmount * 0.02;
@@ -168,7 +168,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 4500000 && numTicket < 5499999) {
+		} else if (numTicket >= 4500000 && numTicket < 5499999) {
 			// console.log('here');
 			netAmount = 4500000 - 4500000 * 0.14;
 			extra = numTicket - 4500000;
@@ -180,7 +180,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 5500000 && numTicket < 6999999) {
+		} else if (numTicket >= 5500000 && numTicket < 6999999) {
 			netAmount = 5500000 - 5500000 * 0.14;
 			extra = numTicket - 5500000;
 			salary_amount = netAmount * 0.02;
@@ -191,7 +191,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 7000000 && numTicket < 8499999) {
+		} else if (numTicket >= 7000000 && numTicket < 8499999) {
 			netAmount = 7000000 - 7000000 * 0.13;
 			extra = numTicket - 7000000;
 			salary_amount = netAmount * 0.02;
@@ -203,7 +203,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 8500000 && numTicket < 109999999) {
+		} else if (numTicket >= 8500000 && numTicket < 109999999) {
 			netAmount = 8500000 - 8500000 * 0.13;
 			extra = numTicket - 8500000;
 			salary_amount = netAmount * 0.02;
@@ -214,7 +214,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 11000000 && numTicket < 13499999) {
+		} else if (numTicket >= 11000000 && numTicket < 13499999) {
 			netAmount = 11000000 - 11000000 * 0.13;
 			extra = numTicket - 11000000;
 			salary_amount = netAmount * 0.02;
@@ -225,7 +225,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 13500000 && numTicket < 16999999) {
+		} else if (numTicket >= 13500000 && numTicket < 16999999) {
 			netAmount = 13500000 - 13500000 * 0.13;
 			extra = numTicket - 13500000;
 			salary_amount = netAmount * 0.02;
@@ -236,7 +236,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 17000000 && numTicket < 19999999) {
+		} else if (numTicket >= 17000000 && numTicket < 19999999) {
 			netAmount = 17000000 - 17000000 * 0.12;
 			extra = numTicket - 17000000;
 			salary_amount = netAmount * 0.02;
@@ -247,7 +247,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 20000000 && numTicket < 24999999) {
+		} else if (numTicket >= 20000000 && numTicket < 24999999) {
 			netAmount = 20000000 - 20000000 * 0.12;
 			extra = numTicket - 20000000;
 			salary_amount = netAmount * 0.02;
@@ -258,7 +258,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 25000000 && numTicket < 34999999) {
+		} else if (numTicket >= 25000000 && numTicket < 34999999) {
 			netAmount = 25000000 - 25000000 * 0.12;
 			extra = numTicket - 25000000;
 			salary_amount = netAmount * 0.02;
@@ -269,7 +269,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 35000000 && numTicket < 49999999) {
+		} else if (numTicket >= 35000000 && numTicket < 49999999) {
 			netAmount = 35000000 - 35000000 * 0.11;
 			extra = numTicket - 35000000;
 			salary_amount = netAmount * 0.02;
@@ -280,7 +280,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 50000000 && numTicket < 99999999) {
+		} else if (numTicket >= 50000000 && numTicket < 99999999) {
 			netAmount = 50000000 - 50000000 * 0.11;
 			extra = numTicket - 50000000;
 			salary_amount = netAmount * 0.02;
@@ -291,7 +291,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 100000000 && numTicket < 199999999) {
+		} else if (numTicket >= 100000000 && numTicket < 199999999) {
 			netAmount = 100000000 - 100000000 * 0.1;
 			extra = numTicket - 100000000;
 			salary_amount = netAmount * 0.02;
@@ -302,7 +302,7 @@ exports.getSalary = catchAsyncErrors(async (req, res, next) => {
 			merchant_extra = extra * 0.2 * 0.02;
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus;
-		} else if (numTicket > 200000000) {
+		} else if (numTicket >= 200000000) {
 			netAmount = 200000000 - 200000000 * 0.1;
 			extra = numTicket - 200000000;
 			salary_amount = netAmount * 0.02;
@@ -438,3 +438,22 @@ exports.convertAllHostNickNameToText = catchAsyncErrors(
 		});
 	}
 );
+
+// remove duplicate host by id
+exports.removeDuplicateHostById = catchAsyncErrors(async (req, res, next) => {
+	// find duplicate host by id
+	const hosts = await Host.find();
+
+	for (let i = 0; i < hosts.length; i++) {
+		const host = hosts[i];
+		const hostById = await Host.findById(host._id);
+		if (hostById.id == host.id && hostById._id != host._id) {
+			await Host.findByIdAndDelete(host._id);
+		}
+	}
+
+	res.status(200).json({
+		success: true,
+		massage: 'Remove duplicate host by id',
+	});
+});
